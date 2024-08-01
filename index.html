@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Día Soleado en el Espacio</title>
-    <meta name="description" content="A-Frame scene simulating a sunny day in space">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <meta charset="utf-8" />
+    <title>Figuras Girando Alrededor del Visualizador</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <a-scene>
-      <!-- Luz Direccional para Simular el Sol -->
-      <a-light type="directional" position="0 10 0" color="#FFF" intensity="1" target="#scene"></a-light>
+      <!-- Esfera girando alrededor de la cámara -->
+      <a-sphere
+        position="3 1.5 -5"
+        radius="0.5"
+        color="#EF2D5E"
+        animation="property: position; to: -3 1.5 -5; loop: true; dur: 5000; easing: linear"
+        animation__rotate="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear"
+      ></a-sphere>
 
-      <!-- Fondo del Espacio -->
-      <a-sky src="sky.jpg"></a-sky>
+      <!-- Cubo girando alrededor de la cámara -->
+      <a-box
+        position="-3 1.5 -5"
+        depth="0.5"
+        height="0.5"
+        width="0.5"
+        color="#4CC3D9"
+        animation="property: position; to: 3 1.5 -5; loop: true; dur: 5000; easing: linear"
+        animation__rotate="property: rotation; to: 360 0 0; loop: true; dur: 5000; easing: linear"
+      ></a-box>
 
-      <!-- Suelo -->
-      <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#2E8B57"></a-plane>
+      <!-- Cilindro girando alrededor de la cámara -->
+      <a-cylinder
+        position="0 1.5 -3"
+        radius="0.3"
+        height="0.8"
+        color="#FFC65D"
+        animation="property: position; to: 0 1.5 -7; loop: true; dur: 5000; easing: linear"
+        animation__rotate="property: rotation; to: 0 360 360; loop: true; dur: 5000; easing: linear"
+      ></a-cylinder>
 
-      <!-- Elementos Adicionales (opcional) -->
-      <a-box position="0 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="2 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="-2 0.75 -4" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <!-- Tetraedro girando alrededor de la cámara -->
+      <a-octahedron
+        position="0 3 -5"
+        radius="0.5"
+        color="#7BC8A4"
+        animation="property: position; to: 0 0 -5; loop: true; dur: 5000; easing: linear"
+        animation__rotate="property: rotation; to: 360 360 0; loop: true; dur: 5000; easing: linear"
+      ></a-octahedron>
 
       <!-- Cámara -->
-      <a-entity camera look-controls position="0 1.6 3"></a-entity>
+      <a-camera position="0 1.6 0"></a-camera>
     </a-scene>
   </body>
 </html>
+
