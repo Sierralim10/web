@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>My A-Frame Scene</title>
-  <meta name="description" content="A basic A-Frame scene">
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-</head>
-<body>
-  <a-scene>
-    <!-- Box with animation -->
-    <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" 
-           animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"></a-box>
-    
-    <!-- Static sphere -->
-    <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-    
-    <!-- Static cylinder -->
-    <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-    
-    <!-- Plane (ground) -->
-    <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-    
-    <!-- Sky -->
-    <a-sky color="#ECECEC"></a-sky>
-  </a-scene>
-</body>
+  <head>
+    <title>Día Soleado en el Espacio</title>
+    <meta name="description" content="A-Frame scene simulating a sunny day in space">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Luz Direccional para Simular el Sol -->
+      <a-light type="directional" position="0 10 0" color="#FFF" intensity="1" target="#scene"></a-light>
+
+      <!-- Fondo del Espacio -->
+      <a-sky src="sky.jpg"></a-sky>
+
+      <!-- Suelo -->
+      <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#2E8B57"></a-plane>
+
+      <!-- Elementos Adicionales (opcional) -->
+      <a-box position="0 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+      <a-sphere position="2 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder position="-2 0.75 -4" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+
+      <!-- Cámara -->
+      <a-entity camera look-controls position="0 1.6 3"></a-entity>
+    </a-scene>
+  </body>
 </html>
