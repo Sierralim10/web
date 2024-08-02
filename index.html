@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Lluvia de Estrellas con Sonido y Cubo Interactivo</title>
+    <title>Video de YouTube en A-Frame</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
     <style>
@@ -39,10 +39,37 @@
         material="shader: flat"
       ></a-box>
 
+      <!-- Video de YouTube como Iframe -->
+      <a-entity 
+        geometry="primitive: plane; width: 4; height: 2.25"
+        material="shader: flat"
+        position="0 2 -3"
+        rotation="0 0 0"
+        >
+        <a-entity
+          position="0 0 0.01"
+          geometry="primitive: plane; width: 4; height: 2.25"
+          material="shader: flat; src: #youtube"
+        ></a-entity>
+      </a-entity>
+
       <!-- Cámara con cursor -->
       <a-camera position="0 1.6 0">
         <a-cursor></a-cursor>
       </a-camera>
+
+      <!-- Iframe del video de YouTube -->
+      <div id="youtube" style="display: none;">
+        <iframe 
+          width="560" 
+          height="315" 
+          src="https://www.youtube.com/watch?v=1wADwhhrD40&ab_channel=MVR" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen
+        ></iframe>
+      </div>
 
       <script>
         // Crear estrellas
@@ -79,4 +106,3 @@
     </a-scene>
   </body>
 </html>
-
