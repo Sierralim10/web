@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Lluvia de Estrellas en el Espacio</title>
+    <title>Lluvia de Estrellas con Sonido</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <style>
       body {
@@ -17,6 +17,14 @@
 
       <!-- Estrellas -->
       <a-entity id="star-container"></a-entity>
+
+      <!-- Sonido de fondo -->
+      <a-sound 
+        src="song.mp3"
+        autoplay="true"
+        loop="true"
+        volume="0.5"
+      ></a-sound>
 
       <!-- Cámara -->
       <a-camera position="0 1.6 0"></a-camera>
@@ -56,5 +64,4 @@
     </a-scene>
   </body>
 </html>
-
 
