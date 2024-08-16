@@ -9,26 +9,58 @@ let editingIndex = null;
 canvas.width = 300;
 canvas.height = 150;
 
-// Iniciar dibujo
+// Variable para controlar el dibujo
 let drawing = false;
-canvas.addEventListener('mousedown', function(e) {
-    drawing = true;
-    context.beginPath();
-    context.moveTo(e.offsetX, e.offsetY);
-});
 
-// Dibuja en el canvas
-canvas.addEventListener('mousemove', function(e) {
+// Función para comenzar el dibujo
+function startDrawing(e) {
+    drawing = true;
+    const { offsetX, offsetY } = getOffset(e);
+    context.beginPath();
+    context.moveTo(offsetX, offsetY);
+}
+
+// Función para dibujar en el canvas
+function draw(e) {
     if (drawing) {
-        context.lineTo(e.offsetX, e.offsetY);
+        const { offsetX, offsetY } = getOffset(e);
+        context.lineTo(offsetX, offsetY);
         context.stroke();
     }
-});
+}
 
-// Finaliza el dibujo
-canvas.addEventListener('mouseup', function() {
+// Función para finalizar el dibujo
+function stopDrawing() {
     drawing = false;
-});
+}
+
+// Función para obtener las coordenadas del evento (táctil o ratón)
+function getOffset(e) {
+    const rect = canvas.getBoundingClientRect();
+    if (e.touches) {
+        // Para eventos táctiles
+        return {
+            offsetX: e.touches[0].clientX - rect.left,
+            offsetY: e.touches[0].clientY - rect.top
+        };
+    } else {
+        // Para eventos de ratón
+        return {
+            offsetX: e.clientX - rect.left,
+            offsetY: e.clientY - rect.top
+        };
+    }
+}
+
+// Agregar eventos para ratón
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+
+// Agregar eventos para táctiles
+canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', stopDrawing);
 
 // Limpiar el canvas
 document.getElementById('clear-signature').addEventListener('click', function () {
@@ -141,3 +173,4 @@ document.getElementById('descargar-excel').addEventListener('click', function ()
         document.body.removeChild(link);
     });
 });
+
