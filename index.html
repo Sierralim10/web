@@ -1,108 +1,57 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Video de YouTube en A-Frame</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v4.0.1/dist/aframe-physics-system.min.js"></script>
-    <style>
-      body {
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <a-scene physics="gravity: 0 -9.8 0">
-      <!-- Cielo con imagen 360 del espacio -->
-      <a-sky src="sky.jpg"></a-sky>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Llegada Alumnos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Agregamos el logo -->
+        <img src="logo.png" alt="Logo" class="logo">
 
-      <!-- Estrellas -->
-      <a-entity id="star-container"></a-entity>
+        <h1>Registro de Llegada Alumnos</h1>
+        <form id="visitor-form">
+            <div class="form-row">
+                <input type="text" id="nombre" placeholder="Nombre" required>
+                <input type="text" id="quien-entrego" placeholder="Quién entregó" required>
+                <input type="text" id="quien-recoge" placeholder="Quién recoge" required>
+                <input type="text" id="comentario" placeholder="Comentario" style="width: calc(20% - 10px);">
+            </div>
+            <div class="signature-container">
+                <label>Firma:</label>
+                <canvas id="signature-pad" width="250" height="100"></canvas>
+                <button type="button" id="clear-signature">Limpiar Firma</button>
+            </div>
+            <button type="submit">Guardar</button>
+        </form>
 
-      <!-- Sonido de fondo -->
-      <a-sound 
-        src="song.mp3"
-        autoplay="true"
-        loop="true"
-        volume="0.5"
-      ></a-sound>
+        <table id="registro-tabla">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Quién entregó</th>
+                    <th>Quién recoge</th>
+                    <th>Comentario</th>
+                    <th>Firma</th>
+                    <th>Fecha y Hora</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se insertarán los registros -->
+            </tbody>
+        </table>
 
-      <!-- Cubo interactivo -->
-      <a-box 
-        position="0 1 -3" 
-        depth="0.5" 
-        height="0.5" 
-        width="0.5" 
-        color="#4CC3D9"
-        dynamic-body
-        grabbable
-        material="shader: flat"
-      ></a-box>
+        <div class="buttons">
+            <button id="borrar-historial">Borrar Historial</button>
+            <button id="descargar-excel">Descargar Excel</button>
+        </div>
+    </div>
 
-      <!-- Video de YouTube como Iframe -->
-      <a-entity 
-        geometry="primitive: plane; width: 4; height: 2.25"
-        material="shader: flat"
-        position="0 2 -3"
-        rotation="0 0 0"
-        >
-        <a-entity
-          position="0 0 0.01"
-          geometry="primitive: plane; width: 4; height: 2.25"
-          material="shader: flat; src: #youtube"
-        ></a-entity>
-      </a-entity>
-
-      <!-- Cámara con cursor -->
-      <a-camera position="0 1.6 0">
-        <a-cursor></a-cursor>
-      </a-camera>
-
-      <!-- Iframe del video de YouTube -->
-      <div id="youtube" style="display: none;">
-        <iframe 
-          width="560" 
-          height="315" 
-          src="https://www.youtube.com/watch?v=SQJBMeVLEcs&ab_channel=Mexi" 
-          title="YouTube video player" 
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          allowfullscreen
-        ></iframe>
-      </div>
-
-      <script>
-        // Crear estrellas
-        const starContainer = document.querySelector('#star-container');
-        const numStars = 100; // Número de estrellas
-        const sceneHeight = 10; // Altura de la escena
-
-        for (let i = 0; i < numStars; i++) {
-          // Crear una nueva estrella
-          const star = document.createElement('a-sphere');
-          star.setAttribute('radius', '0.05');
-          star.setAttribute('color', '#FFF');
-          
-          // Posición aleatoria
-          const x = (Math.random() - 0.5) * 10;
-          const y = Math.random() * sceneHeight + 5; // Empezar más arriba
-          const z = (Math.random() - 0.5) * 10;
-          star.setAttribute('position', `${x} ${y} ${z}`);
-          
-          // Animación de caída
-          const fallDuration = Math.random() * 5000 + 5000; // Duración aleatoria
-          star.setAttribute('animation', `
-            property: position;
-            to: ${x} -5 ${z};
-            dur: ${fallDuration};
-            easing: linear;
-            loop: true;
-          `);
-
-          // Añadir la estrella al contenedor
-          starContainer.appendChild(star);
-        }
-      </script>
-    </a-scene>
-  </body>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</body>
 </html>
