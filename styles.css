@@ -1,0 +1,109 @@
+body {
+    background-color: #f77f00; /* Fondo naranja */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: center; /* Centrar contenido */
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #0056b3; /* Azul */
+}
+
+/* Estilo para el logo más grande */
+.logo {
+    width: 350px; /* Ajusta el tamaño del logo */
+    margin-bottom: 10px;
+}
+
+form {
+    margin-bottom: 10px;
+}
+
+/* Estilo para alinear los campos en horizontal */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+input, button {
+    width: calc(25% - 10px); /* Ajuste para distribuir los campos horizontalmente */
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background-color: #003f8a;
+}
+
+/* Ajustes para los botones pequeños al final del historial */
+.buttons button {
+    width: auto;
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-spacing: 0 15px; /* Espaciado entre filas */
+}
+
+th {
+    background-color: #0056b3;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    background-color: #f9f9f9;
+    padding: 12px;
+}
+
+canvas {
+    width: 250px;
+    height: 100px;
+    border: 1px solid #ccc;
+}
+
+/* Estilo de los botones al final del historial */
+.buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.buttons button {
+    margin: 5px; /* Espaciado entre los botones */
+}
+
+/* Estilo para el botón de editar más pequeño */
+td button {
+    background-color: #0056b3;
+    color: white;
+    font-size: 12px; /* Texto más pequeño */
+    padding: 5px 10px; /* Botón más pequeño */
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+td button:hover {
+    background-color: #003f8a;
+}
