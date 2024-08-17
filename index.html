@@ -8,9 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Agregamos el logo -->
         <img src="logo.png" alt="Logo" class="logo">
-
         <h1>Registro de Llegada Alumnos</h1>
         <form id="visitor-form">
             <div class="form-row">
@@ -18,11 +16,6 @@
                 <input type="text" id="quien-entrego" placeholder="Quién entregó" required>
                 <input type="text" id="quien-recoge" placeholder="Quién recoge" required>
                 <input type="text" id="comentario" placeholder="Comentario" style="width: calc(20% - 10px);">
-            </div>
-            <div class="signature-container">
-                <label>Firma:</label>
-                <canvas id="signature-pad" width="250" height="100"></canvas>
-                <button type="button" id="clear-signature">Limpiar Firma</button>
             </div>
             <button type="submit">Guardar</button>
         </form>
@@ -40,13 +33,23 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se insertarán los registros -->
+                <!-- Registros se insertarán aquí -->
             </tbody>
         </table>
 
         <div class="buttons">
             <button id="borrar-historial">Borrar Historial</button>
             <button id="descargar-excel">Descargar Excel</button>
+        </div>
+    </div>
+
+    <!-- Modal para la firma -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Firma</h2>
+            <canvas id="signature-pad-large"></canvas>
+            <button onclick="guardarFirma()">Guardar Firma</button>
         </div>
     </div>
 
