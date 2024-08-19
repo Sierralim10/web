@@ -4,6 +4,7 @@ const modal = document.getElementById('modal');
 const closeModalBtn = document.querySelector('.close-btn');
 const modalSignaturePad = document.getElementById('signature-pad-large');
 const modalContext = modalSignaturePad.getContext('2d');
+const limpiarFirmaBtn = document.getElementById('limpiar-firma');
 let registros = [];
 let currentSignIndex = null;
 
@@ -71,6 +72,11 @@ function guardarFirma() {
     actualizarTabla();
 }
 
+// Limpiar Firma
+limpiarFirmaBtn.addEventListener('click', function () {
+    modalContext.clearRect(0, 0, modalSignaturePad.width, modalSignaturePad.height);
+});
+
 closeModalBtn.addEventListener('click', function () {
     modal.style.display = 'none';
     currentSignIndex = null;
@@ -100,25 +106,14 @@ document.getElementById('borrar-historial').addEventListener('click', function (
     actualizarTabla();
 });
 
-// Descargar historial como imagen
-document.getElementById('descargar-excel').addEventListener('click', function () {
-    const wb = XLSX.utils.book_new();
-    const ws_data = [["Nombre", "Quién Entregó", "Quién Recoge", "Comentario", "Firma", "Fecha y Hora"]];
-
-    registros.forEach(registro => {
-        ws_data.push([
-            registro.nombre,
-            registro.quienEntrego,
-            registro.quienRecoge,
-            registro.comentario,
-            registro.firma ? "Sí" : "No",
-            registro.fechaHora
-        ]);
+// Descargar screenshot del historial
+document.getElementById('descargar-screenshot').addEventListener('click', function () {
+    html2canvas(document.querySelector('table')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'registro_historial.png';
+        link.href = canvas.toDataURL();
+        link.click();
     });
-
-    const ws = XLSX.utils.aoa_to_sheet(ws_data);
-    XLSX.utils.book_append_sheet(wb, ws, "Registros");
-    XLSX.writeFile(wb, 'registro_alumnos.xlsx');
 });
 
 function editarRegistro(index) {
