@@ -1,30 +1,36 @@
 body {
-    background-color: #f77f00;
-    font-family: Arial, sans-serif;
+    background-color: #ffb451;
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
+    color: #333;
+    margin: 0;
+    padding: 0;
     text-align: center;
 }
 
 .container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 75%;
+    margin: 40px auto;
+    padding: 25px;
+    background-color: #fffffe;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    color: #0056b3;
+    font-size: 28px;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 20px;
 }
 
 .logo {
-    width: 350px;
-    margin-bottom: 10px;
+    width: 350px;  /* Aumentado el tamaño del logo */
+    margin-bottom: 5px;
 }
 
 form {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .form-row {
@@ -33,49 +39,65 @@ form {
     flex-wrap: wrap;
 }
 
-input, button {
-    width: calc(25% - 10px);
+input {
+    width: calc(30% - 10px);
     padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
+    border: 1px solid #CED4DA;
     border-radius: 5px;
+    font-size: 16px;
+    color: #0872dd;
+    background-color: #E9ECEF;
+    margin-bottom: 10px;
 }
 
 button {
-    background-color: #0056b3;
+    padding: 12px 24px;
+    background-color: #007BFF;
     color: white;
     border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #003f8a;
+    background-color: #0056b3;
+}
+
+.buttons {
+    margin-top: 20px;  /* Agregado espacio superior para separar de la tabla */
 }
 
 .buttons button {
     width: auto;
     font-size: 14px;
     padding: 8px 16px;
+    margin: 0 5px;  /* Espacio entre los botones */
 }
 
 table {
     width: 100%;
-    margin-top: 20px;
-    border-spacing: 0 15px;
+    margin-top: 30px;
+    border-collapse: collapse;
 }
 
 th {
-    background-color: #0056b3;
+    background-color: #2685e4;
     color: white;
     padding: 12px;
+    font-weight: 600;
 }
 
 td {
-    background-color: #f9f9f9;
+    background-color: #F8F9FA;
     padding: 12px;
+    border: 1px solid #DEE2E6;
+    text-align: left;
 }
 
 td button {
-    background-color: #0056b3;
+    background-color: #007BFF;
     color: white;
     font-size: 12px;
     padding: 5px 10px;
@@ -85,7 +107,7 @@ td button {
 }
 
 td button:hover {
-    background-color: #003f8a;
+    background-color: #0056b3;
 }
 
 .modal {
@@ -98,15 +120,17 @@ td button:hover {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
 }
 
 .modal-content {
     background-color: #fff;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #CED4DA;
     width: 80%;
     max-width: 600px;
+    border-radius: 10px;
 }
 
 .close-btn {
@@ -124,7 +148,21 @@ td button:hover {
 }
 
 #signature-pad-large {
-    border: 2px solid #000;
+    border: 2px solid #CED4DA;
     width: 100%;
     height: 300px;
+}
+
+.signature-clear-btn {
+    margin-top: 10px;
+    background-color: #267dc9;
+    border: none;
+    color: rgb(241, 171, 41);
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.signature-clear-btn:hover {
+    background-color: #267dc9;
 }
