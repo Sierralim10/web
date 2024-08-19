@@ -156,4 +156,3 @@ function drawSignature(event) {
     modalContext.beginPath();
     modalContext.moveTo(x, y);
 }
-
