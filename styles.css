@@ -25,7 +25,7 @@ h1 {
 }
 
 .logo {
-    width: 350px;  /* Aumentado el tamaño del logo */
+    width: 350px;
     margin-bottom: 5px;
 }
 
@@ -66,14 +66,14 @@ button:hover {
 }
 
 .buttons {
-    margin-top: 20px;  /* Agregado espacio superior para separar de la tabla */
+    margin-top: 20px;
 }
 
 .buttons button {
     width: auto;
     font-size: 14px;
     padding: 8px 16px;
-    margin: 0 5px;  /* Espacio entre los botones */
+    margin: 0 5px;
 }
 
 table {
@@ -147,22 +147,17 @@ td button:hover {
     cursor: pointer;
 }
 
-#signature-pad-large {
-    border: 2px solid #CED4DA;
+#video {
     width: 100%;
-    height: 300px;
+    border: 2px solid #CED4DA;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-.signature-clear-btn {
-    margin-top: 10px;
-    background-color: #267dc9;
-    border: none;
-    color: rgb(241, 171, 41);
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
+#photo-canvas {
+    display: none;
+    border: 2px solid #CED4DA;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-.signature-clear-btn:hover {
-    background-color: #267dc9;
-}
