@@ -13,8 +13,8 @@ header {
 }
 
 #logo {
-    width: 1050px; /* Ajusta el tamaño del logo según tus necesidades */
-    height: 500px;
+    width: 600px; /* Ajusta el tamaño del logo según tus necesidades */
+    height: auto;
     margin-bottom: 10px;
 }
 
