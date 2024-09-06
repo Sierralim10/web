@@ -1,66 +1,39 @@
-let registros = [];
-let currentSignIndex = -1;
+let registros = JSON.parse(localStorage.getItem('registros')) || [];
+let indiceEdicion = null;
 
-document.getElementById('visitor-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const nombre = document.getElementById('nombre').value;
-    const quienEntrego = document.getElementById('quien-entrego').value;
-    const quienRecoge = document.getElementById('quien-recoge').value;
-    const comentario = document.getElementById('comentario').value;
-    const fechaHora = obtenerFechaHora();
+document.getElementById('registro-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    if (currentSignIndex !== -1) {
-        // Actualizar registro existente
-        registros[currentSignIndex] = {
-            nombre,
-            quienEntrego,
-            quienRecoge,
-            comentario,
-            foto: registros[currentSignIndex].foto,
-            fechaHora
-        };
-        currentSignIndex = -1;
-    } else {
-        // Crear nuevo registro
-        const registro = {
-            nombre,
-            quienEntrego,
-            quienRecoge,
-            comentario,
-            foto: null,
-            fechaHora
-        };
+    const form = event.target;
+    const nuevoRegistro = {
+        nombre: form.nombre.value,
+        quienEntrego: form.quienEntrego.value,
+        quienRecoge: form.quienRecoge.value,
+        comentario: form.comentario.value,
+        foto: '',
+        fechaHora: new Date().toLocaleString()
+    };
 
-        registros.push(registro);
-    }
-
+    registros.unshift(nuevoRegistro); // Añadir al principio del array
     actualizarTabla();
-    this.reset();
+    form.reset();
 });
-
-function obtenerFechaHora() {
-    const now = new Date();
-    const dia = String(now.getDate()).padStart(2, '0');
-    const mes = String(now.getMonth() + 1).padStart(2, '0');
-    const anio = now.getFullYear().toString().slice(-2);
-    const horas = String(now.getHours()).padStart(2, '0');
-    const minutos = String(now.getMinutes()).padStart(2, '0');
-    const segundos = String(now.getSeconds()).padStart(2, '0');
-    return `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
-}
 
 function actualizarTabla() {
     const tabla = document.querySelector('#registro-tabla tbody');
     tabla.innerHTML = '';
+
     registros.forEach((registro, index) => {
         const fila = document.createElement('tr');
         fila.innerHTML = `
-            <td>${registro.nombre}</td>
-            <td>${registro.quienEntrego}</td>
-            <td>${registro.quienRecoge}</td>
-            <td>${registro.comentario}</td>
-            <td>${registro.foto ? '<img src="' + registro.foto + '" alt="Foto" width="100">' : 'Sin Foto'}</td>
-            <td>${registro.fechaHora}</td>
+            <td>${registro.nombre || ''}</td>
+            <td>${registro.quienEntrego || ''}</td>
+            <td>${registro.quienRecoge || ''}</td>
+            <td>${registro.comentario || ''}</td>
+            <td>
+                ${registro.foto ? '<img src="' + registro.foto + '" alt="Foto" width="100">' : 'Sin Foto'}
+            </td>
+            <td>${registro.fechaHora || ''}</td>
             <td>
                 <button onclick="abrirModalFoto(${index})">Tomar Foto</button>
                 <button onclick="editarRegistro(${index})">Editar</button>
@@ -68,89 +41,87 @@ function actualizarTabla() {
         `;
         tabla.appendChild(fila);
     });
+
+    localStorage.setItem('registros', JSON.stringify(registros));
 }
 
 function abrirModalFoto(index) {
-    const modal = document.getElementById('photo-modal');
-    const video = document.getElementById('video');
-    currentSignIndex = index;
+    indiceEdicion = index;
+    const modal = document.getElementById('modal-foto');
     modal.style.display = 'block';
 
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
+            const video = document.getElementById('video');
             video.srcObject = stream;
+            video.play();
         })
-        .catch(error => {
-            console.error("Error accessing the camera: ", error);
+        .catch(err => {
+            console.error('Error al acceder a la cámara: ', err);
         });
 }
 
-function guardarFoto() {
+document.getElementById('boton-capturar').addEventListener('click', function() {
+    const canvas = document.getElementById('canvas');
     const video = document.getElementById('video');
-    const canvas = document.getElementById('photo-canvas');
-    const context = canvas.getContext('2d');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    registros[currentSignIndex].foto = canvas.toDataURL('image/png');
-    cerrarModalFoto();
+    const dataURL = canvas.toDataURL('image/png');
+    registros[indiceEdicion].foto = dataURL;
     actualizarTabla();
-}
+    cerrarModalFoto();
+});
 
 function cerrarModalFoto() {
-    const modal = document.getElementById('photo-modal');
+    const modal = document.getElementById('modal-foto');
+    modal.style.display = 'none';
+
     const video = document.getElementById('video');
     const stream = video.srcObject;
-    const tracks = stream.getTracks();
-
-    tracks.forEach(track => track.stop());
-    video.srcObject = null;
-    modal.style.display = 'none';
+    if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        video.srcObject = null;
+    }
 }
 
-document.getElementById('clear-photo').addEventListener('click', function () {
-    const canvas = document.getElementById('photo-canvas');
-    const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    registros[currentSignIndex].foto = null;
+function editarRegistro(index) {
+    const registro = registros[index];
+    const form = document.getElementById('registro-form');
+
+    form.nombre.value = registro.nombre;
+    form.quienEntrego.value = registro.quienEntrego;
+    form.quienRecoge.value = registro.quienRecoge;
+    form.comentario.value = registro.comentario;
+
+    registros.splice(index, 1);
     actualizarTabla();
-});
+}
 
-document.getElementById('capture-photo').addEventListener('click', guardarFoto);
-
-document.querySelector('.modal .close-btn').addEventListener('click', cerrarModalFoto);
-
-document.getElementById('borrar-historial').addEventListener('click', function () {
+document.getElementById('borrar-historial').addEventListener('click', function() {
     registros = [];
     actualizarTabla();
+    localStorage.removeItem('registros');
 });
 
-document.getElementById('descargar-screenshot').addEventListener('click', function () {
-    html2canvas(document.querySelector('.container')).then(canvas => {
+document.getElementById('descargar-historial').addEventListener('click', function() {
+    // Descargar screenshot del historial
+    html2canvas(document.querySelector('#registro-tabla')).then(canvas => {
         const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png');
+        link.href = canvas.toDataURL();
         link.download = 'historial.png';
         link.click();
     });
 
-    // Descarga las fotos
+    // Descargar todas las fotos de los registros
     registros.forEach((registro, index) => {
         if (registro.foto) {
             const link = document.createElement('a');
             link.href = registro.foto;
-            link.download = `foto_${index}_${registro.fechaHora}.png`;
+            link.download = `foto_${index + 1}.png`;
             link.click();
         }
     });
 });
 
-function editarRegistro(index) {
-    const registro = registros[index];
-    document.getElementById('nombre').value = registro.nombre;
-    document.getElementById('quien-entrego').value = registro.quienEntrego;
-    document.getElementById('quien-recoge').value = registro.quienRecoge;
-    document.getElementById('comentario').value = registro.comentario;
-
-    currentSignIndex = index;
-}
+actualizarTabla();
